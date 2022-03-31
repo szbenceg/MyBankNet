@@ -1,0 +1,57 @@
+﻿@using System.Security.Claims
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@inject SignInManager<Customer> SignInManager
+@inject ICustomerService customerService
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="text-center">
+        <h1 class="display-6">Számla adatok</h1>
+    </div>
+
+    @if (customerService.GetAccountsAsync(User.Identity.Name) == null)
+    {
+        <h3>Nincs bankszámla</h3>
+    }
+    else
+    {
+        @foreach (Account account in customerService.GetAccountsAsync(User.Identity.Name))
+        {
+            
+            <div style="padding-top: 25px;">
+                <div class="card shadow-sm bg-white rounded">
+                    <div class="card-header">
+                        Számla adatok
+                      </div>
+                      <div class="card-body">
+                        <h5 class="card-title" style="text-align: center;">Számlaszám: @account.AccountNumber</h5>
+                        <div>
+                            <p>
+                                <span style="font-weight: bold;">Egyenleg: </span> @account.Balance Forint
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <span style="font-weight: bold;">Számlanyitás: </span> @account.Created
+                            </p>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    
+}
+else
+{
+
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+    </div>
+
+}
