@@ -1,0 +1,34 @@
+﻿@using System.Globalization
+@model TransactionViewModelHistory
+
+@inject ICustomerService customerService
+
+@{
+	ViewData["Title"] = "Átutalás történet";
+	 IEnumerable<string> customerAccountNumber = customerService.GetAccountsByCustomerName(User.Identity.Name).Select(account => account.AccountNumber);
+}
+
+
+<div style="width: 100%;">
+	<div class="row top-row ">
+		<div class="col-md-8 mx-auto ">
+			<h3 class="text-center pt-2" style="margin-bottom: 30px">Átutalás történet</h3>
+			@foreach(TransactionViewModelHistory history in customerService.GetTransactionsByCustomerName(User.Identity.Name)){
+				<div class="card bg-white rounded m-5" style="box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;">
+					<div class="card-body">
+						<h5 class="card-title">Kedvezményezett neve: @history.BenificaryName</h5>
+						<div>Kedvezményezett számlaszám: @history.DestinationAccountNumber</div>
+						<div>Közlemény: @history.Message</div>
+						<div>Tranzakció ideje: @history.ExecutionDate</div>
+						@if(customerAccountNumber.Contains(history.DestinationAccountNumber)){
+							<p class="card-text pt-2" style="color: green; font-weight: 600">Összeg: @history.TransactionTotal.ToString("N",new CultureInfo("hu-HU")) Forint</p>
+						}else{
+							<p class="card-text pt-2" style="font-weight: 600">Összeg: @history.TransactionTotal.ToString("N",new CultureInfo("hu-HU")) Forint</p>
+						}
+						
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+</div>

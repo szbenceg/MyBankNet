@@ -12,8 +12,8 @@ using MyBank.Model.Services;
 namespace MyBank.Migrations
 {
     [DbContext(typeof(CustomerContext))]
-    [Migration("20220331140718_migration3")]
-    partial class migration3
+    [Migration("20220331215334_Migrat")]
+    partial class Migrat
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -159,11 +159,11 @@ namespace MyBank.Migrations
 
             modelBuilder.Entity("MyBank.Model.Dao.Account", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("AccountNumber")
                         .IsRequired()
@@ -258,6 +258,38 @@ namespace MyBank.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("Customer", (string)null);
+                });
+
+            modelBuilder.Entity("MyBank.Model.Dao.Transaction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("DestinationAccountId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DestinationAccountOwnerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SourceAccountId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TransactionExecutionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TransactionTotal")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

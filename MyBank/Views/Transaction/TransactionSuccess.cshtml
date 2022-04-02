@@ -1,0 +1,32 @@
+﻿<!--TODO megkérdez hogy lehet, hogy ne lehessen odanavigálni az oldalra csak úgy-->
+@model TransactionViewModel
+
+<div style="width: 100%;">
+	<div class="row top-row" style="margin-top: 130px;">
+		<div class="col-md-8 mx-auto " style="width: 30rem;">
+			<div class="card" style="text-align: center">
+				<div class="card-header">
+					<h4 style="text-align: center">Sikeres Átutalás</h4>
+				</div>
+				<div class="card-body">
+					<div style="font-weight: bold">Kedvezményezett neve:</div>
+					<span>@Model.BenificaryName</span>
+					
+					<hr>
+
+					<div style="font-weight: bold">Kedvezményezett számlaszám:</div>
+					<span>@Model.DestinationAccountNumber</span>
+					
+					<hr>
+
+					<div style="font-weight: bold">Közlemény:</div> 
+					<span>@Model.Message</span>
+
+					<hr>
+
+					<div style="font-weight: bold">Összeg:</div> 
+					<span>@Model.Amount Forint</span>
+				</div>
+		</div>
+	</div>
+</div>

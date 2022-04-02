@@ -6,7 +6,7 @@ using MyBank.ViewModel;
 
 namespace MyBank.Views.Account
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private readonly UserManager<Customer> _userManager;
         private readonly SignInManager<Customer> _signInManager;

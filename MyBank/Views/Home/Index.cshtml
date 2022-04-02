@@ -1,4 +1,5 @@
 ﻿@using System.Security.Claims
+@using System.Globalization
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -13,13 +14,13 @@
         <h1 class="display-6">Számla adatok</h1>
     </div>
 
-    @if (customerService.GetAccountsAsync(User.Identity.Name) == null)
+    @if (customerService.GetAccountsByCustomerName(User.Identity.Name) == null)
     {
         <h3>Nincs bankszámla</h3>
     }
     else
     {
-        @foreach (Account account in customerService.GetAccountsAsync(User.Identity.Name))
+        @foreach (Account account in customerService.GetAccountsByCustomerName(User.Identity.Name))
         {
             
             <div style="padding-top: 25px;">
@@ -31,7 +32,8 @@
                         <h5 class="card-title" style="text-align: center;">Számlaszám: @account.AccountNumber</h5>
                         <div>
                             <p>
-                                <span style="font-weight: bold;">Egyenleg: </span> @account.Balance Forint
+                                <span style="font-weight: bold;">Egyenleg: </span>
+                                @account.Balance.ToString("N",new CultureInfo("hu-HU")) Forint
                             </p>
                         </div>
                         <div>
@@ -50,8 +52,70 @@
 else
 {
 
-    <div class="text-center">
-        <h1 class="display-4">Welcome</h1>
+    <!--<div class="container" style="width: 100%;">
+        <div class="row">
+            <div class="col-8">
+                <div class="text-center">
+                    <h1 class="display-4">Üdvözöljük</h1>
+                </div>
+            </div>
+            <div class="col-md-auto">
+              Variable width content
+            </div>
+        </div>
+    </div>-->
+
+    <div class="container" style="width: 100%; display: felx;">
+         <div class="row pt-4">
+            
+            <h1 class="display-6" style="text-align: center">Néhány szó rólunk</h1>
+            <p class="pb-4" style="text-align: center;">Nálunk csak a pénz számít. Alap szolgáltatás, hogy mindenkinek van egy magán gépe yacht-ja és néhány Bentley-je.</p>
+            
+            <div class="col pt-4">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="~/bentley.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title" style="text-align: center;">
+                            Megbízhatóság
+                        </h5>
+                        <p class="card-text">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id metus vel orci tincidunt mattis. 
+                            Proin maximus eu metus nec luctus. Integer tellus dolor, fringilla vel massa at
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="~/airplane.jpg" alt="Card image cap">
+                    <div class="card-body">
+                       <h5 class="card-title" style="text-align: center;">
+                            Nyereség
+                        </h5>
+                        <p class="card-text">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id metus vel orci tincidunt mattis. 
+                            Proin maximus eu metus nec luctus. Integer tellus dolor, fringilla vel massa at
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col pt-4">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="~/luxury-yacht.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title" style="text-align: center;">
+                            Luxus
+                        </h5>
+                        <p class="card-text">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id metus vel orci tincidunt mattis. 
+                            Proin maximus eu metus nec luctus. Integer tellus dolor, fringilla vel massa at
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyBank.Model.Dao
@@ -11,7 +12,7 @@ namespace MyBank.Model.Dao
         }
 
         [Key]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }

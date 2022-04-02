@@ -34,7 +34,7 @@ namespace MyBank.Model
                     Name = "Test Elek",
                     UserName = "TestElek",
                     Accounts = new List<Account> { 
-                        new Account { 
+                        new Account {
                             AccountNumber = "1111",
                             Balance = 1000000,
                         } 
