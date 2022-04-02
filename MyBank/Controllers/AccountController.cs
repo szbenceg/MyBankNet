@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MyBank.Controllers;
 using MyBank.Model.Dao;
+using MyBank.Model.Services;
 using MyBank.ViewModel;
 
 namespace MyBank.Views.Account
@@ -10,12 +11,15 @@ namespace MyBank.Views.Account
     {
         private readonly UserManager<Customer> _userManager;
         private readonly SignInManager<Customer> _signInManager;
+        private readonly ICustomerService _customerService;
 
         public AccountController(UserManager<Customer> userManager,
-                                 SignInManager<Customer> signInManager)
+                                 SignInManager<Customer> signInManager,
+                                 ICustomerService customerService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _customerService = customerService;
         }
 
         [HttpGet]
@@ -39,14 +43,20 @@ namespace MyBank.Views.Account
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByNameAsync(userVm.UserName);
-                if (user == null)
+                user.IsSecure = userVm.IsSecure;
+                await _userManager.UpdateAsync(user);
+                if (user == null || user.PinCode != userVm.PinCode)
                 {
                     ModelState.AddModelError("", "Sikertelen bejelentkezés!");
                     return View(userVm);
                 }
 
-                var result = await _signInManager.PasswordSignInAsync(user, userVm.Password, false, false);
+                if (!_customerService.GetAccountsByCustomerName(userVm.UserName).Select(account => account.AccountNumber).Contains(userVm.AccountNumber)) {
+                    ModelState.AddModelError("", "Sikertelen bejelentkezés!");
+                    return View(userVm);
+                }
 
+                var result = await _signInManager.PasswordSignInAsync(user, userVm.Password, false, false);
 
                 if (result.Succeeded)
                 {
@@ -69,7 +79,8 @@ namespace MyBank.Views.Account
 
             var customers = new Customer
             {
-                Name = user.UserName,
+                Name = user.Name,
+                PinCode = user.PinCode,
                 UserName = user.UserName,
                 Accounts = new List<MyBank.Model.Dao.Account> {
                     new MyBank.Model.Dao.Account {

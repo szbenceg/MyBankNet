@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MyBank.Migrations
 {
-    public partial class Migrat : Migration
+    public partial class Migration1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,6 +31,7 @@ namespace MyBank.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PinCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -60,9 +61,10 @@ namespace MyBank.Migrations
                     Type = table.Column<int>(type: "int", nullable: false),
                     SourceAccountId = table.Column<int>(type: "int", nullable: false),
                     DestinationAccountId = table.Column<int>(type: "int", nullable: false),
-                    DestinationAccountOwnerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BenificaryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TransactionExecutionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TransactionTotal = table.Column<int>(type: "int", nullable: false)
+                    TransactionTotal = table.Column<int>(type: "int", nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

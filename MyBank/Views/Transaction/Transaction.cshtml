@@ -6,7 +6,6 @@
 
 @inject SignInManager<Customer> SignInManager
 @inject ICustomerService customerService
-
 <div style="width: 100%;">
 	<div class="row top-row ">
 		<div class="col-md-8 mx-auto ">
@@ -51,12 +50,30 @@
 					<span asp-validation-for="Message" class="text-danger"></span>
 				</div>
 
+				@if (customerService.GetIsSecureByUsername(User.Identity.Name))
+				{
+					<div style="padding-top: 30px">
+						<div class="form-group">
+							<label asp-for="UserName"></label>
+							<input asp-for="UserName" class="form-control" />
+							<span asp-validation-for="UserName" class="text-danger"></span>
+						</div>
+
+						<div class="form-group pt-4">
+							<label asp-for="Password"></label>
+							<input asp-for="Password" class="form-control" />
+							<span asp-validation-for="Password" class="text-danger"></span>
+						</div>
+					</div>
+				}
+
 				<button class="btn btn-primary mt-3 float-end" type="submit">Átutalás</button>
 			</form>
 
 		</div>
 	</div>
 </div>
+
 
 @section Scripts {
 	@await Html.PartialAsync("_ValidationScriptsPartial")

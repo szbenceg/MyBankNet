@@ -10,5 +10,7 @@ namespace MyBank.Model.Services
         public Boolean CreateTransaction(TransactionType type, int sourceAccount, int destinationAccount, int transactionTotal, string benificaryName, string message);
 
         public IEnumerable<TransactionViewModelHistory> GetTransactionsByCustomerName(string customerName);
+
+        public bool GetIsSecureByUsername(string username);
     }
 }

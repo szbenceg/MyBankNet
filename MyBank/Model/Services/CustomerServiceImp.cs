@@ -61,22 +61,32 @@ namespace MyBank.Model.Services
                                                 .Where(account => account.CustomerId == customerId).ToList()
                                                 .Select(account => account.Id);
 
-            IEnumerable<TransactionViewModelHistory> transactionHistory = _customerContext.Transactions
-                                                                                .Where(transaction => accountIds.Contains(transaction.SourceAccountId) || accountIds.Contains(transaction.DestinationAccountId))
-                                                                                .Select(transaction => new TransactionViewModelHistory { 
-                                                                                    TransactionTotal = transaction.TransactionTotal,
-                                                                                    ExecutionDate = transaction.TransactionExecutionDate,
-                                                                                    BenificaryName = transaction.BenificaryName,
-                                                                                    TransactionType = transaction.Type,
-                                                                                    SourceAccountNumber = _customerContext.Accounts.Where(account => account.Id == transaction.SourceAccountId).FirstOrDefault().AccountNumber,
-                                                                                    DestinationAccountNumber = _customerContext.Accounts.Where(account => account.Id == transaction.DestinationAccountId).FirstOrDefault().AccountNumber,
-                                                                                    Message = transaction.Message
-                                                                                })
-                                                                                .OrderByDescending(transaction => transaction.ExecutionDate);
+            IEnumerable<TransactionViewModelHistory> transactionHistory = 
+                _customerContext.Transactions
+                    .Where(transaction => accountIds.Contains(transaction.SourceAccountId) || accountIds.Contains(transaction.DestinationAccountId))
+                    .Select(transaction => new TransactionViewModelHistory { 
+                        TransactionTotal = transaction.TransactionTotal,
+                        ExecutionDate = transaction.TransactionExecutionDate,
+                        BenificaryName = transaction.BenificaryName,
+                        TransactionType = transaction.Type,
+                        SourceAccountNumber = _customerContext.Accounts.Where(account => account.Id == transaction.SourceAccountId).FirstOrDefault().AccountNumber,
+                        DestinationAccountNumber = _customerContext.Accounts.Where(account => account.Id == transaction.DestinationAccountId).FirstOrDefault().AccountNumber,
+                        Message = transaction.Message
+                    })
+                    .OrderByDescending(transaction => transaction.ExecutionDate);
 
             return transactionHistory;
 
         }
+
+        public bool GetIsSecureByUsername(string customerName) {
+
+            bool isSecure = _customerManager.FindByNameAsync(customerName).Result.IsSecure;
+
+            return isSecure;
+
+        }
+
 
     }
 }

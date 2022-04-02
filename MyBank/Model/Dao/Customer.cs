@@ -19,6 +19,10 @@ namespace MyBank.Model.Dao
 
         public string Name { get; set; } = null!;
 
+        public bool IsSecure { get; set; } = false;
+
+        public string PinCode { get; set; } = null!;
+
         public ICollection<Account> Accounts { get; set; }
     }
 }

@@ -21,5 +21,14 @@ namespace MyBank.ViewModel
         [MaxLength(120, ErrorMessage = "A közlemény túl hosszú")]
         public string Message { get; set; } = null!;
 
+        //For conformation
+
+        [DisplayName("Felhasználó név")]
+        public string ?UserName { get; set; }
+
+        [DisplayName("Jelszó")]
+        [DataType(DataType.Password)]
+        public string ?Password { get; set; }
+
     }
 }

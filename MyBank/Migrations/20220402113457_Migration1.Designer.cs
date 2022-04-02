@@ -12,8 +12,8 @@ using MyBank.Model.Services;
 namespace MyBank.Migrations
 {
     [DbContext(typeof(CustomerContext))]
-    [Migration("20220401121732_Migrat5")]
-    partial class Migrat5
+    [Migration("20220402113457_Migration1")]
+    partial class Migration1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -236,6 +236,10 @@ namespace MyBank.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("PinCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
