@@ -1,0 +1,80 @@
+﻿@model TransactionViewModel
+@{
+	ViewData["Title"] = "Átutalás";
+}
+
+
+@inject SignInManager<Customer> SignInManager
+@inject ICustomerService customerService
+<div style="width: 100%;">
+	<div class="row top-row ">
+		<div class="col-md-8 mx-auto ">
+			<h2 class="text-center pt-2">Átutalás</h2>
+
+			<form asp-controller="Transaction" asp-action="Transaction">
+
+				<div asp-validation-summary="All" class="text-danger"></div>
+
+				<div class="form-group pt-1">
+					<label asp-for="DestinationAccountNumber"></label>
+					<input asp-for="DestinationAccountNumber" class="form-control" />
+					<span asp-validation-for="DestinationAccountNumber" class="text-danger"></span>
+				</div>
+
+				<div class="form-group pt-3">
+					<label asp-for="BenificaryName"></label>
+					<input asp-for="BenificaryName" class="form-control" />
+					<span asp-validation-for="BenificaryName" class="text-danger"></span>
+				</div>
+
+				<div class="form-group pt-3">
+					<label asp-for="SourceAccount"></label>
+					<select asp-for="SourceAccount" class="form-select" aria-label="Default select example">
+						<option value="">Számla kiválasztása</option>
+						@foreach (Account account in customerService.GetAccountsByCustomerName(User.Identity.Name))
+						{
+							<option value="@account.AccountNumber">@account.AccountNumber</option>
+						}
+					</select>
+				</div>
+
+				<div class="form-group pt-3">
+					<label asp-for="Amount"></label>
+					<input asp-for="Amount" class="form-control" />
+					<span asp-validation-for="Amount" class="text-danger"></span>
+				</div>
+
+				<div class="form-group pt-3">
+					<label asp-for="Message"></label>
+					<input asp-for="Message" class="form-control" />
+					<span asp-validation-for="Message" class="text-danger"></span>
+				</div>
+
+				@if (customerService.GetIsSecureByUsername(User.Identity.Name))
+				{
+					<div style="padding-top: 30px">
+						<div class="form-group">
+							<label asp-for="UserName"></label>
+							<input asp-for="UserName" class="form-control" />
+							<span asp-validation-for="UserName" class="text-danger"></span>
+						</div>
+
+						<div class="form-group pt-4">
+							<label asp-for="Password"></label>
+							<input asp-for="Password" class="form-control" />
+							<span asp-validation-for="Password" class="text-danger"></span>
+						</div>
+					</div>
+				}
+
+				<button class="btn btn-primary mt-3 float-end" type="submit">Átutalás</button>
+			</form>
+
+		</div>
+	</div>
+</div>
+
+
+@section Scripts {
+	@await Html.PartialAsync("_ValidationScriptsPartial")
+}

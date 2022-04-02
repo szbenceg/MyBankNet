@@ -16,3 +16,22 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.active {
+    padding-bottom: 5px;
+    background: linear-gradient(0deg, green, green) bottom center no-repeat;
+    background-size: 100% 3px;
+}
+
+.border-animation {
+    padding-bottom: 5px;
+    /* set here size + gap size from text */
+    background: linear-gradient(0deg, green, green) bottom center no-repeat;
+    background-size: 0px 3px;
+    transition: 0.5s;
+    text-decoration: none;
+}
+
+.border-animation:hover {
+    background-size: 100% 3px;
+}

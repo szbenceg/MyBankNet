@@ -4,23 +4,23 @@
 
 namespace MyBank.Migrations
 {
-    public partial class seconf : Migration
+    public partial class Migration4 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "PinCode",
+                name: "IsSecureConfirmed",
                 table: "Customer");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "PinCode",
+            migrationBuilder.AddColumn<bool>(
+                name: "IsSecureConfirmed",
                 table: "Customer",
-                type: "nvarchar(max)",
+                type: "bit",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: false);
         }
     }
 }
