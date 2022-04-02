@@ -11,6 +11,7 @@ builder.Services.AddRazorPages();
 
 // Add services to the container.
 builder.Services.AddDbContext<CustomerContext>(options => 
+    //options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 

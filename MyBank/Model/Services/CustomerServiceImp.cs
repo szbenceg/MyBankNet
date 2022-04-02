@@ -63,7 +63,10 @@ namespace MyBank.Model.Services
 
             IEnumerable<TransactionViewModelHistory> transactionHistory = 
                 _customerContext.Transactions
-                    .Where(transaction => accountIds.Contains(transaction.SourceAccountId) || accountIds.Contains(transaction.DestinationAccountId))
+                    .Where(transaction => 
+                        (accountIds.Contains(transaction.SourceAccountId) || accountIds.Contains(transaction.DestinationAccountId)) 
+                        && transaction.TransactionExecutionDate > DateTime.Today.AddMonths(-1)
+                    )
                     .Select(transaction => new TransactionViewModelHistory { 
                         TransactionTotal = transaction.TransactionTotal,
                         ExecutionDate = transaction.TransactionExecutionDate,

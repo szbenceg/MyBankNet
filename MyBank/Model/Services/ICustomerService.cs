@@ -12,5 +12,6 @@ namespace MyBank.Model.Services
         public IEnumerable<TransactionViewModelHistory> GetTransactionsByCustomerName(string customerName);
 
         public bool GetIsSecureByUsername(string username);
+
     }
 }

@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MyBank.Model.Dao.Account">
+    <Position X="5.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACCAAAAAAAAAAAAAgAAAAAAAgAABQAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Dao\Account.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.Model.Dao.Customer">
+    <Position X="9.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAAAAAQAAAAAAACAAAAAAAAAIAA=</HashCode>
+      <FileName>Model\Dao\Customer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.Model.Dao.Employee">
+    <Position X="11" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Dao\Employee.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.Model.Dao.Transaction">
+    <Position X="9.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAEgAAAQAAAAAAAAAAAAQAAIAAIEAA=</HashCode>
+      <FileName>Model\Dao\Transaction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.Model.Services.CustomerContext">
+    <Position X="11" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAGAAAAAAAAAAAAAAAAAAAAAEAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Services\CustomerContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.Model.Services.CustomerServiceImp" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAACAAAAAFAAAAAACAAAAAAABAAAAAAAAAgAA=</HashCode>
+      <FileName>Model\Services\CustomerServiceImp.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MyBank.Model.DbInitializer">
+    <Position X="9.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAACAAAQABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\DbInitializer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.ViewModel.ConformationViewModel">
+    <Position X="7.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAQAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\ConformationViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.ViewModel.LoginViewModel">
+    <Position X="5.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAAAAAAAAAgAAAACAQAAAAAAIAA=</HashCode>
+      <FileName>ViewModel\LoginViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.ViewModel.RegistrationViewModel">
+    <Position X="7.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAAAAAQAAAgAAAACAQAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\RegistrationViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.ViewModel.TransactionViewModel">
+    <Position X="0.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAACAQAAIgAIAAI=</HashCode>
+      <FileName>ViewModel\TransactionViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.ViewModel.TransactionViewModelHistory">
+    <Position X="2.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAQAAAAAAAAAECAQCAIgAIAAA=</HashCode>
+      <FileName>ViewModel\TransactionViewModelHistory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.Views.Account.AccountController">
+    <Position X="2.75" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAABAAAIIAAABAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Controllers\AccountController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.Views.Account.CustomerService" Collapsed="true">
+    <Position X="5.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\CustomerService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.Controllers.BaseController">
+    <Position X="1.75" Y="2.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\BaseController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.Controllers.HomeController">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.Controllers.TransactionController">
+    <Position X="11" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACABAAAAAAAAAAAAABAAAAIAAAAAAAAAAIAAAAAAQA=</HashCode>
+      <FileName>Controllers\TransactionController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="MyBank.Model.Services.ICustomerService">
+    <Position X="0.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAACAAAAAEAAAAAAAAAAAAAABAAAAAAAAAgAA=</HashCode>
+      <FileName>Model\Services\ICustomerService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="MyBank.Model.Dao.TransactionType">
+    <Position X="2.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Dao\Transaction.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
