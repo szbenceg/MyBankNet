@@ -1,5 +1,4 @@
-﻿using MyBank.Model.Dao;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyBank.ViewModel
@@ -7,7 +6,7 @@ namespace MyBank.ViewModel
     public class TransactionViewModelHistory
     {
 
-        public TransactionType ?TransactionType { get; set; }
+        public String ?TransactionType { get; set; }
 
         public string ?BenificaryName { get; set; } = null!;
 

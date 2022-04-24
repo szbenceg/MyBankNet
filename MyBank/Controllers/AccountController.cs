@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyBank.Controllers;
-using MyBank.Model.Dao;
-using MyBank.Model.Services;
+using MyBank.Persistence.Dao;
+using MyBank.Persistence.Services;
 using MyBank.ViewModel;
 
 namespace MyBank.Views.Account
@@ -10,16 +10,19 @@ namespace MyBank.Views.Account
     public class AccountController : BaseController
     {
         private readonly UserManager<Customer> _userManager;
+        private readonly UserManager<Employee> _employeeManager;
         private readonly SignInManager<Customer> _signInManager;
         private readonly ICustomerService _customerService;
 
         public AccountController(UserManager<Customer> userManager,
                                  SignInManager<Customer> signInManager,
+                                 UserManager<Employee> employeeManager,
                                  ICustomerService customerService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _customerService = customerService;
+            _employeeManager = employeeManager;
         }
 
         [HttpGet]
@@ -77,21 +80,21 @@ namespace MyBank.Views.Account
                 return View("Register", user);
 
 
-            var customers = new Customer
+            var customers = new Employee
             {
                 Name = user.Name,
-                PinCode = user.PinCode,
+                //PinCode = user.PinCode,
                 UserName = user.UserName,
-                Accounts = new List<MyBank.Model.Dao.Account> {
-                    new MyBank.Model.Dao.Account {
-                        AccountNumber = user.AccountNumber,
-                        Balance = 1000000,
-                        Created = DateTime.Now,
-                    }
-                },
+                //Accounts = new List<MyBank.Persistence.Dao.Account> {
+                //    new MyBank.Persistence.Dao.Account {
+                //        AccountNumber = user.AccountNumber,
+                //        Balance = 1000000,
+                //        Created = DateTime.Now,
+                //    }
+                //},
             };
 
-            var result = await _userManager.CreateAsync(customers, user.Password);
+            var result = await _employeeManager.CreateAsync(customers, user.Password);
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
@@ -99,7 +102,7 @@ namespace MyBank.Views.Account
                 return View("Register", user);
             }
 
-            await _signInManager.SignInAsync(customers, false); 
+            //await _signInManager.SignInAsync(customers, false); 
             return RedirectToAction("Index", "Home");
         }
 
