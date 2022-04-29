@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MyBank.Desktop.View"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="MainWindow" Height="650" Width="900">
+        Title="MyBank" Height="650" Width="900">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="ContentRendered">
             <i:InvokeCommandAction Command="{Binding RefreshCustomerListCommand}" />
@@ -104,8 +104,8 @@
             </GroupBox>
             <StackPanel Grid.Row="3" Orientation="Horizontal">
                 <Button Width="73"  Height="25" Margin="7" Content="Betét" Command="{Binding AddMoneyCommand}" />
-                <Button Width="73"  Height="25" Margin="7" Content="Kivét" Command="{Binding EditItemCommand}" />
-                <Button Width="73"  Height="25" Margin="7" Content="Utalás" Command="{Binding DeleteItemCommand}" />
+                <Button Width="73"  Height="25" Margin="7" Content="Kivét" Command="{Binding TakeOutMoneyCommand}" />
+                <Button Width="73"  Height="25" Margin="7" Content="Utalás" Command="{Binding CreateTransactionCommand}" />
                 <Button Width="100"  Height="25" Margin="7" Content="Számla zárolása" Command="{Binding DeleteItemCommand}" />
             </StackPanel>
         </Grid>

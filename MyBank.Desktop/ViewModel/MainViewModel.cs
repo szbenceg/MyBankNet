@@ -22,8 +22,11 @@ namespace MyBank.Desktop.ViewModel
         public DelegateCommand LogoutCommand { get; private set; }
         public DelegateCommand SelectCommand { get; private set; }
         public DelegateCommand AddMoneyCommand { get; private set; }
+        public DelegateCommand TakeOutMoneyCommand { get; private set; }
+        public DelegateCommand CreateTransactionCommand { get; private set; }
 
-        
+        public event EventHandler AddMoneyEvent;
+        public event EventHandler CreateTransactionEvent;
 
         public MainViewModel(MyBankApiService apiService)
         {
@@ -31,13 +34,21 @@ namespace MyBank.Desktop.ViewModel
             RefreshCustomerListCommand = new DelegateCommand(_ => LoadCustomerListAsync());
             //LogoutCommand = new DelegateCommand(_ => LogoutAsync());
             SelectCommand = new DelegateCommand(_ => LoadItemsAsync(SelectedCustomer));
-            AddMoneyCommand = new DelegateCommand(_ => AddMoneyCommandHandler());
-            //SelectedAccountChangedCommand = new DelegateCommand(_ => SelectedAccountChangedHandler());
+            AddMoneyCommand = new DelegateCommand(_ => AddOrTakeOutMoneyCommandHandler("ADD"));
+            TakeOutMoneyCommand = new DelegateCommand(_ => AddOrTakeOutMoneyCommandHandler("TAKE_OUT"));
+            CreateTransactionCommand = new DelegateCommand(_ => CreateTransactionCommandHandler());
         }
 
-        private void AddMoneyCommandHandler()
+        private void CreateTransactionCommandHandler()
         {
-            throw new NotImplementedException();
+            if (CreateTransactionEvent != null)
+                CreateTransactionEvent(this, new CustomEventArgs(null, SelectedAccountId));
+        }
+
+        private void AddOrTakeOutMoneyCommandHandler(string type)
+        {
+            if (AddMoneyEvent != null)
+                AddMoneyEvent(this, new CustomEventArgs(type, SelectedAccountId));
         }
 
         private async void LoadCustomerListAsync()
@@ -46,11 +57,21 @@ namespace MyBank.Desktop.ViewModel
             {
                 CustomerList = new ObservableCollection<CustomerViewModel>(
                     (await _apiService.LoadCustomersAsync()).Select(listItem => (CustomerViewModel)listItem));
+                if (SelectedCustomerId != 0)
+                { 
+                    SelectedCustomer = CustomerList.Where(customerViewModel => customerViewModel.Id == SelectedCustomerId).FirstOrDefault();
+                }
             }
             catch (Exception ex) when (ex is NetworkException || ex is HttpRequestException)
             {
                 OnMessageApplication($"Unexpected error occured! ({ex.Message})");
             }
+        }
+
+        public async void RefreshTransactions()
+        {
+            LoadCustomerListAsync();
+            LoadItemsAsync(SelectedCustomer);
         }
 
         private async void LoadItemsAsync(CustomerViewModel list)
@@ -67,6 +88,9 @@ namespace MyBank.Desktop.ViewModel
                 TransactionList = new ObservableCollection<TransactionViewModel>(
                     (await _apiService.LoadTransactionsByCustomerId(list.Id)).Select(listItem => (TransactionViewModel)listItem));
                 SelectedAccountBalance = list.SelectedAccount.Balance.ToString("N", new CultureInfo("hu-HU")) + " HUF";
+                SelectedAccountId = list.SelectedAccount.Id;
+                SelectedCustomerId = list.Id;
+                OnPropertyChanged(nameof(SelectedAccountBalance));
                 //SelectedListName = list.Name;
                 //Items = new ObservableCollection<ItemViewModel>((await _service.LoadItemsAsync(list.Id))
                 //    .Select(item => (ItemViewModel)item));
@@ -131,6 +155,9 @@ namespace MyBank.Desktop.ViewModel
             get { return _selectedAccountBalance; }
             set { _selectedAccountBalance = value; OnPropertyChanged(); }
         }
+
+        public int SelectedAccountId { get; set; }
+        public int SelectedCustomerId { get; set; }
 
     }
 }

@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace MyBank.Desktop.View
 {
     /// <summary>
-    /// Interaction logic for LoginWindow.xaml
+    /// Interaction logic for BuildingEditorWindow.xaml
     /// </summary>
-    public partial class AddMoneyWindow : Window
+    public partial class CreateTransactionWindow : Window
     {
-        public AddMoneyWindow()
+        public CreateTransactionWindow()
         {
             InitializeComponent();
         }

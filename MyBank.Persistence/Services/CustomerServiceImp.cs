@@ -121,5 +121,63 @@ namespace MyBank.Persistence.Services
             return _customerContext.Customers.Include("Accounts");
         }
 
+
+        public void AddMoneyById(int accountId, int amount) {
+
+            //TODO ellenorzed
+
+            Account account = _customerContext.Accounts.Where(account => account.Id == accountId && !account.IsLocked).First();
+
+            if (account != null) {
+                Transaction transaction = new Transaction
+                {
+                    Type = TransactionType.Betet,
+                    SourceAccountId = account.Id,
+                    DestinationAccountId = account.Id,
+                    TransactionTotal = amount,
+                    TransactionExecutionDate = DateTime.Now,
+                    BenificaryName = "ME",
+                    Message = "Betet"
+                };
+
+                account.Balance += amount;
+
+                _customerContext.Transactions.Add(transaction);
+
+                _customerContext.SaveChanges();
+            }
+           
+        }
+
+        public void TakeOutMoneyById(int accountId, int amount) {
+
+            //TODO ellenorzed
+
+            Account account = _customerContext.Accounts.Where(account => account.Id == accountId && !account.IsLocked).First();
+
+            if (account != null)
+            {
+                Transaction transaction = new Transaction
+                {
+                    Type = TransactionType.Kivet,
+                    SourceAccountId = account.Id,
+                    DestinationAccountId = account.Id,
+                    TransactionTotal = amount,
+                    TransactionExecutionDate = DateTime.Now,
+                    BenificaryName = "ME",
+                    Message = "Kivet"
+                };
+
+                if(account.Balance - amount > 0) 
+                {
+                    account.Balance -= amount;
+                }
+
+                _customerContext.Transactions.Add(transaction);
+
+                _customerContext.SaveChanges();
+            }
+        }
+
     }
 }

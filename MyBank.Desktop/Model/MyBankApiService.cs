@@ -23,9 +23,9 @@ namespace MyBank.Desktop.Model
         public async Task<IEnumerable<CustomerDto>> LoadCustomersAsync()
         {
             var response = await _client.GetAsync("/api/customer/customers");
-            
-            if (response.IsSuccessStatusCode) 
-            { 
+
+            if (response.IsSuccessStatusCode)
+            {
                 return await response.Content.ReadAsAsync<IEnumerable<CustomerDto>>();
             }
 
@@ -39,6 +39,24 @@ namespace MyBank.Desktop.Model
             if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadAsAsync<IEnumerable<TransactionHistoryDto>>();
+            }
+
+            throw new NetworkException("Service returned: " + response.StatusCode);
+        }
+
+        public async Task<Boolean> AddOrTakeOutMoneyAsync(int accountId, int amount, String type)
+        {
+
+            AddTakeOutMoneyDto request = new AddTakeOutMoneyDto();
+            request.AccountId = accountId;
+            request.Amount = amount;
+            request.Type = type;
+
+            var response = await _client.PostAsJsonAsync("/api/transaction/personal", request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
             }
 
             throw new NetworkException("Service returned: " + response.StatusCode);

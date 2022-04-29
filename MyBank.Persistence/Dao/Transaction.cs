@@ -6,8 +6,9 @@ namespace MyBank.Persistence.Dao
 {
 	public enum TransactionType
 	{
-		
-		Transfer
+		Transfer,
+		Betet,
+		Kivet
 	}
 	public class Transaction
     {

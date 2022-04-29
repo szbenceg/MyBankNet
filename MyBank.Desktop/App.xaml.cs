@@ -20,9 +20,17 @@ namespace MyBank.Desktop
 
         private MainViewModel _mainViewModel;
         private MainWindow _mainView;
+
+        private AddMoneyViewModel _addMoneyViewModel;
+        private AddMoneyWindow _addMoneyWindow;
+
+        private CreateTransactionViewModel _createTransactionViewModel;
+        private CreateTransactionWindow _createTransactionWindow;
+
         public App()
         {
             Startup += Application_Startup;
+
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)
@@ -30,6 +38,9 @@ namespace MyBank.Desktop
             _apiService = new MyBankApiService(ConfigurationManager.AppSettings["baseAddress"]);
 
             _mainViewModel = new MainViewModel(_apiService);
+            
+            _mainViewModel.AddMoneyEvent += new EventHandler(AddMoneyEventHandler);
+            _mainViewModel.CreateTransactionEvent += new EventHandler(CreateTransactionEventHandler);
 
             _mainView = new MainWindow
             {
@@ -37,7 +48,49 @@ namespace MyBank.Desktop
             };
 
             _mainView.Show();
+        }
 
+        private void CreateTransactionEventHandler(object? sender, EventArgs e)
+        {
+            int accountId = ((CustomEventArgs)e).AccountId;
+            
+            if (accountId != 0)
+            {
+                _createTransactionViewModel = new CreateTransactionViewModel( accountId, _apiService);
+                _createTransactionViewModel.ExitApplication += new EventHandler(CreateTransactionView_ExitApplication);
+
+                _createTransactionWindow = new CreateTransactionWindow();
+                _createTransactionWindow.DataContext = _createTransactionViewModel;
+                _createTransactionWindow.Show();
+            }
+
+        }
+
+        private void CreateTransactionView_ExitApplication(object? sender, EventArgs e)
+        {
+            _createTransactionWindow.Close();
+            _mainViewModel.RefreshTransactions();
+        }
+
+        private void AddMoneyEventHandler(object? sender, EventArgs e)
+        {
+            String type = ((CustomEventArgs)e).Message;
+            int accountId = ((CustomEventArgs)e).AccountId;
+
+            if (accountId != 0) {
+                _addMoneyViewModel = new AddMoneyViewModel(type, accountId, _apiService);
+                _addMoneyViewModel.ExitApplication += new EventHandler(ViewModel_ExitApplication);
+
+                _addMoneyWindow = new AddMoneyWindow();
+                _addMoneyWindow.DataContext = _addMoneyViewModel;
+                _addMoneyWindow.Show();
+            }
+        }
+
+        private void ViewModel_ExitApplication(object? sender, EventArgs e)
+        {
+            _addMoneyWindow.Close();
+            _mainViewModel.RefreshTransactions();
         }
     }
 }

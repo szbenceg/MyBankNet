@@ -17,5 +17,9 @@ namespace MyBank.Persistence.Services
 
         public IEnumerable<TransactionHistoryDto> GetTransactionsByCustomerId(int customerId);
 
+        public void AddMoneyById(int accountId, int amount);
+
+        public void TakeOutMoneyById(int accountId, int amount);
+
     }
 }
