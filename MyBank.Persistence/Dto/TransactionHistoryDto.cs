@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyBank.Persistence.Dto
 {
-    public class TransactionHistory
+    public class TransactionHistoryDto
     {
         public String? TransactionType { get; set; }
 
@@ -21,8 +21,5 @@ namespace MyBank.Persistence.Dto
 
         public DateTime? ExecutionDate { get; set; }
 
-        public string? UserName { get; set; }
-
-        public string? Password { get; set; }
     }
 }

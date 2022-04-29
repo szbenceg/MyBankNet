@@ -1,12 +1,114 @@
-﻿<Window x:Class="MyBank.Desktop.MainWindow"
+﻿<Window x:Class="MyBank.Desktop.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyBank.Desktop.View"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="650" Width="900">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="ContentRendered">
+            <i:InvokeCommandAction Command="{Binding RefreshCustomerListCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_Refresh lists" Command="{Binding RefreshCustomerListCommand}" />
+            <MenuItem Header="_Logout" Command="{Binding LogoutCommand}" />
+        </Menu>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-    </Grid>
+
+            <DataGrid ItemsSource="{Binding CustomerList}"
+                      VerticalContentAlignment="Stretch" IsReadOnly="True"
+                      AutoGenerateColumns="False"
+                      SelectedItem="{Binding SelectedCustomer}"
+                      >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding SelectCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
+                <DataGrid.Columns>
+                    
+                    <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+
+                    <DataGridTextColumn Header="Név" Binding="{Binding Name}" />
+                    
+                    <DataGridTemplateColumn Header="Számlaszámok">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate DataType="local:ResultModel">
+                                <ComboBox 
+                                    ItemsSource="{Binding Path=Accounts}"
+                                    DisplayMemberPath="AccountNumber"
+                                    SelectedItem="{Binding SelectedAccount, Mode=TwoWay,
+                                                    UpdateSourceTrigger=PropertyChanged}"
+                                />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <DockPanel>
+                    <Label>Név:</Label>
+                    <TextBox Width="150"  Height="21" Margin="5" Text="{Binding SelectedCustomerName, UpdateSourceTrigger=PropertyChanged}" IsReadOnly = "True" />
+                </DockPanel>
+                <DockPanel>
+                    <Label>Számlaszám:</Label>
+                    <TextBox Width="150"  Height="21" Margin="5" Text="{Binding SelectedAccountNumber, UpdateSourceTrigger=PropertyChanged}" IsReadOnly = "True" />
+                </DockPanel>
+                <DockPanel>
+                    <Label>Egyenleg:</Label>
+                    <TextBox Width="150"  Height="21" Margin="5" Text="{Binding SelectedAccountBalance, UpdateSourceTrigger=PropertyChanged}" IsReadOnly = "True" />
+                </DockPanel>
+                
+            </StackPanel>
+            <GroupBox Grid.Row="2">
+                <GroupBox.Header>
+                    <Label Content="Items:" />
+                </GroupBox.Header>
+                <DataGrid VerticalContentAlignment="Stretch"
+                          IsReadOnly="True"
+                          ItemsSource="{Binding TransactionList}"
+                          AutoGenerateColumns="False">
+                    <!--ItemsSource="{Binding Items}"-->
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Tranzakció típús" Binding="{Binding TransactionType}" />
+                        <DataGridTextColumn Header="Kedvezményezett neve" Binding="{Binding BenificaryName}" />
+                        <DataGridTextColumn Header="Kedvezményező számlaszám" Binding="{Binding SourceAccountNumber}" />
+                        <DataGridTextColumn Header="Kedvezményezett számlaszám" Binding="{Binding DestinationAccountNumber}" />
+                        <DataGridTextColumn Header="Dátum" Binding="{Binding ExecutionDate}" />
+                        <DataGridTextColumn Header="Közlemény" Binding="{Binding Message}" />
+                        <DataGridTextColumn Header="Összeg" Binding="{Binding TransactionTotal}" />
+                        
+                        <!--<DataGridTextColumn Header="Közlemény" Binding="{Binding Message}" Width="*">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>-->
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+            <StackPanel Grid.Row="3" Orientation="Horizontal">
+                <Button Width="73"  Height="25" Margin="7" Content="Betét" Command="{Binding AddMoneyCommand}" />
+                <Button Width="73"  Height="25" Margin="7" Content="Kivét" Command="{Binding EditItemCommand}" />
+                <Button Width="73"  Height="25" Margin="7" Content="Utalás" Command="{Binding DeleteItemCommand}" />
+                <Button Width="100"  Height="25" Margin="7" Content="Számla zárolása" Command="{Binding DeleteItemCommand}" />
+            </StackPanel>
+        </Grid>
+    </DockPanel>
+
 </Window>

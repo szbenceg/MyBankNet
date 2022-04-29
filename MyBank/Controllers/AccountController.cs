@@ -10,13 +10,13 @@ namespace MyBank.Views.Account
     public class AccountController : BaseController
     {
         private readonly UserManager<Customer> _userManager;
-        private readonly UserManager<Employee> _employeeManager;
+        private readonly UserManager<Customer> _employeeManager;
         private readonly SignInManager<Customer> _signInManager;
         private readonly ICustomerService _customerService;
 
         public AccountController(UserManager<Customer> userManager,
                                  SignInManager<Customer> signInManager,
-                                 UserManager<Employee> employeeManager,
+                                 UserManager<Customer> employeeManager,
                                  ICustomerService customerService)
         {
             _userManager = userManager;
@@ -80,18 +80,18 @@ namespace MyBank.Views.Account
                 return View("Register", user);
 
 
-            var customers = new Employee
+            var customers = new Customer
             {
                 Name = user.Name,
-                //PinCode = user.PinCode,
+                PinCode = user.PinCode,
                 UserName = user.UserName,
-                //Accounts = new List<MyBank.Persistence.Dao.Account> {
-                //    new MyBank.Persistence.Dao.Account {
-                //        AccountNumber = user.AccountNumber,
-                //        Balance = 1000000,
-                //        Created = DateTime.Now,
-                //    }
-                //},
+                Accounts = new List<MyBank.Persistence.Dao.Account> {
+                    new MyBank.Persistence.Dao.Account {
+                        AccountNumber = user.AccountNumber,
+                        Balance = 1000000,
+                        Created = DateTime.Now,
+                    }
+                },
             };
 
             var result = await _employeeManager.CreateAsync(customers, user.Password);

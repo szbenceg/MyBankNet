@@ -51,7 +51,7 @@ namespace MyBank.Persistence.Services
             return true;
         }
 
-        public IEnumerable<TransactionHistory> GetTransactionsByCustomerName(string customerName) {
+        public IEnumerable<TransactionHistoryDto> GetTransactionsByCustomerName(string customerName) {
             
             int customerId = _customerManager.FindByNameAsync(customerName).Result.Id;
 
@@ -59,13 +59,42 @@ namespace MyBank.Persistence.Services
                                                 .Where(account => account.CustomerId == customerId).ToList()
                                                 .Select(account => account.Id);
 
-            IEnumerable<TransactionHistory> transactionHistory = 
+            IEnumerable<TransactionHistoryDto> transactionHistory = 
                 _customerContext.Transactions
                     .Where(transaction => 
                         (accountIds.Contains(transaction.SourceAccountId) || accountIds.Contains(transaction.DestinationAccountId)) 
                         && transaction.TransactionExecutionDate > DateTime.Today.AddMonths(-1)
                     )
-                    .Select(transaction => new TransactionHistory { 
+                    .Select(transaction => new TransactionHistoryDto { 
+                        TransactionTotal = transaction.TransactionTotal,
+                        ExecutionDate = transaction.TransactionExecutionDate,
+                        BenificaryName = transaction.BenificaryName,
+                        TransactionType = transaction.Type.ToString(),
+                        SourceAccountNumber = _customerContext.Accounts.Where(account => account.Id == transaction.SourceAccountId).FirstOrDefault().AccountNumber,
+                        DestinationAccountNumber = _customerContext.Accounts.Where(account => account.Id == transaction.DestinationAccountId).FirstOrDefault().AccountNumber,
+                        Message = transaction.Message
+                    })
+                    .OrderByDescending(transaction => transaction.ExecutionDate);
+
+            return transactionHistory;
+
+        }
+
+        public IEnumerable<TransactionHistoryDto> GetTransactionsByCustomerId(int customerId)
+        {
+
+            IEnumerable<int> accountIds = _customerContext.Accounts
+                                                .Where(account => account.CustomerId == customerId).ToList()
+                                                .Select(account => account.Id);
+
+            IEnumerable<TransactionHistoryDto> transactionHistory =
+                _customerContext.Transactions
+                    .Where(transaction =>
+                        (accountIds.Contains(transaction.SourceAccountId) || accountIds.Contains(transaction.DestinationAccountId))
+                        && transaction.TransactionExecutionDate > DateTime.Today.AddMonths(-1)
+                    )
+                    .Select(transaction => new TransactionHistoryDto
+                    {
                         TransactionTotal = transaction.TransactionTotal,
                         ExecutionDate = transaction.TransactionExecutionDate,
                         BenificaryName = transaction.BenificaryName,

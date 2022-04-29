@@ -24,6 +24,10 @@ namespace MyBank.WebApi.Controllers
             return Ok(_customerService.FindAllWithAccounts().Select(customer => (CustomerDto)customer));
         }
 
-
+        [HttpGet("{customerId}/transactions")]
+        public ActionResult<IEnumerable<TransactionHistoryDto>> GetTrasaction(int customerId)
+        {
+            return Ok(_customerService.GetTransactionsByCustomerId(customerId));
+        }
     }
 }

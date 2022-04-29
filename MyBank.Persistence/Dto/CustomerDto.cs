@@ -10,7 +10,7 @@ namespace MyBank.Persistence.Dto
     public class CustomerDto
     {
        
-
+        public int Id { get; set; }
         public string Name { get; set; } = null!;
 
         public ICollection<AccountDto> Accounts { get; set; }
@@ -19,6 +19,7 @@ namespace MyBank.Persistence.Dto
         {
             Name = cust.Name,
             Accounts = cust.Accounts.Select(account => (AccountDto)account).ToList(),
+            Id = cust.Id,
         };
     }
 }
