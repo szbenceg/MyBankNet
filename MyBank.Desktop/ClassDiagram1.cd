@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MyBank.Desktop.ViewModel.AddMoneyViewModel">
+    <Position X="0.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EIAAAAAAAAAACAAAAABCgAAAQAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>ViewModel\AddMoneyViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.Desktop.ViewModel.CreateTransactionViewModel">
+    <Position X="2.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAABAAAAAAAAAABAAEAAQAAAAAAACABCEAAAAAA=</HashCode>
+      <FileName>ViewModel\CreateTransactionViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.Desktop.ViewModel.CustomerViewModel">
+    <Position X="4.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGIAAAAAAAQAAIAABAAAQAAAAAAACAAAAAAAABAAA=</HashCode>
+      <FileName>ViewModel\CustomerViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.Desktop.ViewModel.CustomEventArgs">
+    <Position X="11" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>ViewModel\CustomEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.Desktop.ViewModel.DelegateCommand" BaseTypeListCollapsed="true">
+    <Position X="13" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEACAAQAAECAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\DelegateCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MyBank.Desktop.ViewModel.LoginViewModel">
+    <Position X="9" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EgACAAAAAAAAEAAAAABAAAAAQAAAABAEAQAAEACAAAA=</HashCode>
+      <FileName>ViewModel\LoginViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.Desktop.ViewModel.MainViewModel">
+    <Position X="7" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CABIgEAABQBEICApgEAWDEAQAAEBABAAAABWEEAoAIg=</HashCode>
+      <FileName>ViewModel\MainViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.Desktop.ViewModel.MessageEventArgs">
+    <Position X="11" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>ViewModel\MessageEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.Desktop.ViewModel.TransactionViewModel">
+    <Position X="11" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAQAAQAAAAAAAAAEAAACAIgAIAAA=</HashCode>
+      <FileName>ViewModel\TransactionViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.Desktop.ViewModel.ViewModelBase">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAoAAAAAAAgAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\ViewModelBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MyBank.Desktop.Model.MyBankApiService">
+    <Position X="9" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAEACAAAQgAKAAAAAEAAAAIAAAACAgAA=</HashCode>
+      <FileName>Model\MyBankApiService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.Desktop.Model.NetworkException">
+    <Position X="9" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\NetworkException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyBank.Desktop.App">
+    <Position X="13" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAogKAEEEACAQAAAAAAAAMAAAAAAIIAAAgBAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
