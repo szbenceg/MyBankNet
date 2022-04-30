@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using MyBank.Model.Dao;
-using MyBank.Model.Services;
+using MyBank.Persistence.Dao;
+using MyBank.Persistence.Services;
 using MyBank.ViewModel;
 
 namespace MyBank.Controllers
@@ -34,20 +34,23 @@ namespace MyBank.Controllers
         public IActionResult TransactionHistory()
         {
             ViewBag.IsSecure = _customerService.GetIsSecureByUsername(User.Identity.Name);
+            ViewBag.CustomerAccountNumber = _customerService.GetAccountsByCustomerName(User.Identity.Name).Select(account => account.AccountNumber);
+            ViewBag.TransactionList = _customerService.GetTransactionsByCustomerName(User.Identity.Name);
+
             return View();
         }
 
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> TransactionHistoryConformation(TransactionViewModelHistory vmHistory)
+        public async Task<IActionResult> TransactionHistory(TransactionViewModelHistory vmHistory)
         {
             if (_customerService.GetIsSecureByUsername(User.Identity.Name))
             {
                 var user = await _userManager.FindByNameAsync(vmHistory.UserName == null ? "" : vmHistory.UserName);
-                if (user == null)
+                if (user == null || vmHistory.Password == null)
                 {
-                    ViewBag.IsSecure = false;
+                    ViewBag.IsSecure = true;
                     ModelState.AddModelError("", "Helytelen felhasználói adatok!");
                     return View("TransactionHistory", vmHistory);
                 }
@@ -55,10 +58,12 @@ namespace MyBank.Controllers
 
                 if (!result.Succeeded)
                 {
-                    ViewBag.IsSecure = false;
+                    ViewBag.IsSecure = true;
                     ModelState.AddModelError("", "Helytelen felhasználói adatok!");
                     return View("TransactionHistory", vmHistory);
                 }
+                ViewBag.TransactionList = _customerService.GetTransactionsByCustomerName(User.Identity.Name);
+                ViewBag.CustomerAccountNumber = _customerService.GetAccountsByCustomerName(User.Identity.Name).Select(account => account.AccountNumber);
             }
 
             ViewBag.IsSecure = false;

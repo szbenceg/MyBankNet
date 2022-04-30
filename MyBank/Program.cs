@@ -1,16 +1,17 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using MyBank.Model;
-using MyBank.Model.Dao;
-using MyBank.Model.Services;
+using MyBank.Persistence.Dao;
+using MyBank.Persistence.Model;
+using MyBank.Persistence.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-// Add services to the container.
-builder.Services.AddDbContext<CustomerContext>(options => 
+// Add customer service
+builder.Services.AddDbContext<MyBank.Persistence.Services.CustomerContext>((DbContextOptionsBuilder options) => 
+    //options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
@@ -36,6 +37,10 @@ builder.Services.AddIdentity<Customer, IdentityRole<int>>(options =>
     .AddDefaultTokenProviders();
 
 
+// Add employee service
+builder.Services.AddIdentityCore<Employee>().AddEntityFrameworkStores<MyBank.Persistence.Services.CustomerContext>();
+
+//Custom services
 builder.Services.AddTransient<ICustomerService, CustomerServiceImp>();
 
 builder.Services.AddHttpContextAccessor();
@@ -74,8 +79,8 @@ app.MapControllerRoute(
 using (var serviceScope = app.Services.CreateScope())
 {
     // Adatbázis inicializálása
-    DbInitializer.Initialize(
-        serviceScope.ServiceProvider);
+    DbInitializer.InitializeAsync(
+        serviceScope.ServiceProvider).Wait();
 }
 
 
