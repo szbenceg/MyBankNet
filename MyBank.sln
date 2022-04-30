@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBank", "MyBank\MyBank.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBank.Persistence", "MyBank.Persistence\MyBank.Persistence.csproj", "{923B8017-131D-4B11-A9B3-CF2C3D7DEB2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBank.WebApi", "MyBank.WebApi\MyBank.WebApi.csproj", "{4C1A359E-0A06-4E42-93EB-8CB6ED6FF565}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBank.WebApi", "MyBank.WebApi\MyBank.WebApi.csproj", "{4C1A359E-0A06-4E42-93EB-8CB6ED6FF565}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBank.Desktop", "MyBank.Desktop\MyBank.Desktop.csproj", "{374B5351-1EE7-464A-B001-3C7AA695879D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBank.Desktop", "MyBank.Desktop\MyBank.Desktop.csproj", "{374B5351-1EE7-464A-B001-3C7AA695879D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBank.WebApi.Test", "MyBank.WebApi.Test\MyBank.WebApi.Test.csproj", "{6C3422ED-AF0D-4BBC-890C-EB0338C4576E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{374B5351-1EE7-464A-B001-3C7AA695879D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{374B5351-1EE7-464A-B001-3C7AA695879D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{374B5351-1EE7-464A-B001-3C7AA695879D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C3422ED-AF0D-4BBC-890C-EB0338C4576E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C3422ED-AF0D-4BBC-890C-EB0338C4576E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C3422ED-AF0D-4BBC-890C-EB0338C4576E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C3422ED-AF0D-4BBC-890C-EB0338C4576E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

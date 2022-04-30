@@ -9,7 +9,7 @@ namespace MyBank.Desktop.ViewModel
 {
     public class CreateTransactionViewModel : ViewModelBase
     {
-        private int _accountId;
+        private String _sourceAccountNumber;
         private MyBankApiService _apiService;
 
         public event EventHandler ExitApplication;
@@ -24,19 +24,28 @@ namespace MyBank.Desktop.ViewModel
             set { _editedTransaction = value; OnPropertyChanged(); }
         }
 
-        public CreateTransactionViewModel(int accountId, MyBankApiService _apiService)
+        public CreateTransactionViewModel(string sourceAccountNumber, MyBankApiService apiService)
         {
-            _accountId = accountId;
-            _apiService = _apiService;
+            _sourceAccountNumber = sourceAccountNumber;
+            _apiService = apiService;
 
             ExitCommand = new DelegateCommand(param => OnExitApplication());
             CreateTransactionCommand = new DelegateCommand(param => CreateTransactionCommandHandler());
             EditedTransaction = new TransactionViewModel();
+            EditedTransaction.SourceAccountNumber = _sourceAccountNumber;
         }
 
-        private void CreateTransactionCommandHandler()
+        private async void CreateTransactionCommandHandler()
         {
-            int a = 0;
+            try {
+                bool isSuccess = await _apiService.CreateTransaction(EditedTransaction);
+                if (ExitApplication != null && isSuccess)
+                    ExitApplication(this, EventArgs.Empty);
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         private void OnExitApplication()

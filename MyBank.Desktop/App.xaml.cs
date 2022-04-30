@@ -27,6 +27,9 @@ namespace MyBank.Desktop
         private CreateTransactionViewModel _createTransactionViewModel;
         private CreateTransactionWindow _createTransactionWindow;
 
+        private LoginViewModel _loginViewModel;
+        private LoginWindow _loginWindow;
+
         public App()
         {
             Startup += Application_Startup;
@@ -37,26 +40,57 @@ namespace MyBank.Desktop
         {
             _apiService = new MyBankApiService(ConfigurationManager.AppSettings["baseAddress"]);
 
+            _loginViewModel = new LoginViewModel(_apiService);
+            _loginViewModel.ExitApplication += new EventHandler(LoginViewModelExitEventhandler);
+            _loginViewModel.LoginSuccess += new EventHandler(LoginViewModelLoginSuccessEventhandler);
+            _loginViewModel.LoginFailed += new EventHandler(LoginFailedEventhandler);
+
+            _loginWindow = new LoginWindow();
+            _loginWindow.DataContext = _loginViewModel;
+            _loginWindow.Show();
+
             _mainViewModel = new MainViewModel(_apiService);
-            
+
             _mainViewModel.AddMoneyEvent += new EventHandler(AddMoneyEventHandler);
             _mainViewModel.CreateTransactionEvent += new EventHandler(CreateTransactionEventHandler);
+            _mainViewModel.LogoutEvent += new EventHandler(LogoutEventHandler);
 
             _mainView = new MainWindow
             {
                 DataContext = _mainViewModel
             };
 
+        }
+
+        private void LogoutEventHandler(object? sender, EventArgs e)
+        {
+            Shutdown();
+        }
+
+        private void LoginFailedEventhandler(object? sender, EventArgs e)
+        {
+            MessageBox.Show("A bejelentkezés sikertelen!", "MyBank", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+        }
+
+        private void LoginViewModelLoginSuccessEventhandler(object? sender, EventArgs e)
+        {
+            _loginWindow.Close();
+
             _mainView.Show();
+        }
+
+        private void LoginViewModelExitEventhandler(object? sender, EventArgs e)
+        {
+            Shutdown();
         }
 
         private void CreateTransactionEventHandler(object? sender, EventArgs e)
         {
-            int accountId = ((CustomEventArgs)e).AccountId;
+            string sourceAccountNumber = ((CustomEventArgs)e).SourceAccountNumber;
             
-            if (accountId != 0)
+            if (sourceAccountNumber != null)
             {
-                _createTransactionViewModel = new CreateTransactionViewModel( accountId, _apiService);
+                _createTransactionViewModel = new CreateTransactionViewModel(sourceAccountNumber, _apiService);
                 _createTransactionViewModel.ExitApplication += new EventHandler(CreateTransactionView_ExitApplication);
 
                 _createTransactionWindow = new CreateTransactionWindow();

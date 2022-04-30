@@ -11,32 +11,39 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
+            <TextBlock Text="Kedvezményező számlaszám:" Margin="5" />
+            <TextBox Width="150" Height="22" Text="{Binding EditedTransaction.SourceAccountNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5" IsReadOnly="True"/>
+        </StackPanel>
+
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center">
             <TextBlock Text="Kedvezményezett számlaszám:" Margin="5" />
             <TextBox Width="150" Height="22" Text="{Binding EditedTransaction.DestinationAccountNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center">
+        <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center">
             <TextBlock Text="Kedvezményezett neve:" Margin="5" />
             <TextBox Width="150" Height="22" Text="{Binding EditedTransaction.BenificaryName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center">
+        <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center">
             <TextBlock Text="Összeg:" Margin="5" />
             <TextBox Width="150" Height="22" Text="{Binding EditedTransaction.TransactionTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center">
+        <StackPanel Grid.Row="4" Orientation="Horizontal" VerticalAlignment="Center">
             <TextBlock Text="Közlemény:" Margin="5" />
             <TextBox Width="150" Height="22" Text="{Binding EditedTransaction.Message, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="4" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Right">
+        <StackPanel Grid.Row="5" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Right">
             <Button Content="Mentés" Margin="6,5,0,5" Command="{Binding CreateTransactionCommand}" Width="100" />
             <Button Content="Mégse" Margin="5,5,6,5" Command="{Binding ExitCommand}" Width="100" />
         </StackPanel>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyBank.Persistence.Dto
 {
-    public class TransactionHistoryDto
+    public class TransactionHistoryDto : IEquatable<TransactionHistoryDto>
     {
         public String? TransactionType { get; set; }
 
@@ -21,5 +21,11 @@ namespace MyBank.Persistence.Dto
 
         public DateTime? ExecutionDate { get; set; }
 
+        public bool Equals(TransactionHistoryDto? other)
+        {
+            return TransactionType == other.TransactionType && BenificaryName == other.BenificaryName &&
+                SourceAccountNumber == other.SourceAccountNumber && DestinationAccountNumber == other.DestinationAccountNumber &&
+            Message == other.Message && TransactionTotal == other.TransactionTotal;
+        }
     }
 }

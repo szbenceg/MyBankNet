@@ -6,33 +6,33 @@ using MyBank.Persistence.Services;
 
 namespace MyBank.Persistence.Model
 {
-    public class DbInitializer
+    public class DbInitializerEmployee
     {
-        private static CustomerContext _customerContext = null!;
-        private static UserManager<Customer> _userManager = null!;
+        private static EmployeeContext _customerContext = null!;
+        private static UserManager<Employee> _userManager = null!;
         private static UserManager<Employee> _employeeManager = null!;
         private static RoleManager<IdentityRole<int>> _roleManager = null!;
 
 
         public static async Task InitializeAsync(IServiceProvider serviceProvider)
         {
-            _customerContext = serviceProvider.GetRequiredService<Services.CustomerContext>();
-            _userManager = serviceProvider.GetRequiredService<UserManager<Customer>>();
+            _customerContext = serviceProvider.GetRequiredService<Services.EmployeeContext>();
+            _userManager = serviceProvider.GetRequiredService<UserManager<Employee>>();
             _employeeManager = serviceProvider.GetRequiredService<UserManager<Employee>>();
             _roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
 
             _customerContext.Database.Migrate();
 
-            Employee emp = _employeeManager.FindByNameAsync("manager").Result;
+            Employee emp = _employeeManager.FindByNameAsync("admin").Result;
             if (emp == null)
             { 
                 var employee = new Employee
                 {
-                    Name = "manager",
-                    UserName = "manager"
+                    Name = "admin",
+                    UserName = "admin"
                 };
 
-                var adminRole = new IdentityRole<int>("administrator");
+                var adminRole = new IdentityRole<int>("Administrator");
 
                 try
                 {

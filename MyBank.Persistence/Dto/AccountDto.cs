@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyBank.Persistence.Dto
 {
-    public class AccountDto
+    public class AccountDto : IEquatable<AccountDto>
     {
         public int Id { get; set; }
         public int Balance { get; set; }
@@ -15,6 +15,11 @@ namespace MyBank.Persistence.Dto
         public string ?AccountNumber { get; set; }
 
         public Boolean IsLocked { get; set; }
+
+        public bool Equals(AccountDto? other)
+        {
+            return Id == other.Id && Balance == other.Balance && IsLocked == other.IsLocked && AccountNumber == other.AccountNumber;
+        }
 
         public static explicit operator AccountDto(Account account) => new AccountDto { 
             Id = account.Id,
