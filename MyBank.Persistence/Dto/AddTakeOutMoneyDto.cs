@@ -10,7 +10,6 @@ namespace MyBank.Persistence.Dto
     {
         public int Amount { get; set; }
         public int AccountId { get; set; }
-
         public String Type { get; set; }
     }
 }
