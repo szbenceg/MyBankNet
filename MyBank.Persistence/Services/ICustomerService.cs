@@ -7,7 +7,7 @@ namespace MyBank.Persistence.Services
     {
         public IEnumerable<Account> GetAccountsByCustomerName(string customerName);
         public Account GetAccountByAccountNumber(string accountNumber);
-        public Boolean CreateTransaction(TransactionType type, int sourceAccount, int destinationAccount, int transactionTotal, string benificaryName, string message);
+        public Boolean CreateTransactionById(TransactionType type, int sourceAccount, int destinationAccount, int transactionTotal, string benificaryName, string message);
 
         public IEnumerable<TransactionHistoryDto> GetTransactionsByCustomerName(string customerName);
 
@@ -20,6 +20,10 @@ namespace MyBank.Persistence.Services
         public void AddMoneyById(int accountId, int amount);
 
         public void TakeOutMoneyById(int accountId, int amount);
+
+        public Boolean CreateTransactionByAccountNumber(TransactionType type, string sourceAccountNumber, string destinationAccountNumber, int transactionTotal, string benificaryName, string message);
+
+        public Boolean LockAccountById(int accountId, bool isLock);
 
     }
 }

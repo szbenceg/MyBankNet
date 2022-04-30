@@ -24,25 +24,80 @@ namespace MyBank.Desktop.ViewModel
         public DelegateCommand AddMoneyCommand { get; private set; }
         public DelegateCommand TakeOutMoneyCommand { get; private set; }
         public DelegateCommand CreateTransactionCommand { get; private set; }
+        public DelegateCommand LockAccountCommand { get; private set; }
+        public DelegateCommand ReleaseAccountCommand { get; private set; }
 
         public event EventHandler AddMoneyEvent;
         public event EventHandler CreateTransactionEvent;
+        public event EventHandler LogoutEvent;
 
         public MainViewModel(MyBankApiService apiService)
         {
             _apiService = apiService;
             RefreshCustomerListCommand = new DelegateCommand(_ => LoadCustomerListAsync());
-            //LogoutCommand = new DelegateCommand(_ => LogoutAsync());
+            LogoutCommand = new DelegateCommand(_ => LogoutAsync());
             SelectCommand = new DelegateCommand(_ => LoadItemsAsync(SelectedCustomer));
             AddMoneyCommand = new DelegateCommand(_ => AddOrTakeOutMoneyCommandHandler("ADD"));
             TakeOutMoneyCommand = new DelegateCommand(_ => AddOrTakeOutMoneyCommandHandler("TAKE_OUT"));
             CreateTransactionCommand = new DelegateCommand(_ => CreateTransactionCommandHandler());
+            LockAccountCommand = new DelegateCommand(_ => LockAccountCommandHandler());
+            ReleaseAccountCommand = new DelegateCommand(_ => ReleaseAccountCommandHandler());
+        }
+
+        private async void LogoutAsync()
+        {
+            try
+            {
+                bool isSuccess = await _apiService.Logout();
+                if (isSuccess)
+                {
+                    if (LogoutEvent != null)
+                        LogoutEvent(this, EventArgs.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private async void ReleaseAccountCommandHandler()
+        {
+            try
+            {
+                bool isSuccess = await _apiService.LockAccount(SelectedAccountId, false);
+                if (isSuccess)
+                {
+                    RefreshTransactions();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private async void LockAccountCommandHandler()
+        {
+            try
+            {
+                bool isSuccess = await _apiService.LockAccount(SelectedAccountId, true);
+                if (isSuccess)
+                {
+                    RefreshTransactions();
+                }
+            }
+            catch (Exception ex) 
+            { 
+            
+            }
+           
         }
 
         private void CreateTransactionCommandHandler()
         {
             if (CreateTransactionEvent != null)
-                CreateTransactionEvent(this, new CustomEventArgs(null, SelectedAccountId));
+                CreateTransactionEvent(this, new CustomEventArgs(SelectedAccountNumber));
         }
 
         private void AddOrTakeOutMoneyCommandHandler(string type)
@@ -83,6 +138,7 @@ namespace MyBank.Desktop.ViewModel
 
             try
             {
+
                 SelectedCustomerName = list.Name;
                 SelectedAccountNumber = list.SelectedAccount.AccountNumber;
                 TransactionList = new ObservableCollection<TransactionViewModel>(
@@ -91,9 +147,7 @@ namespace MyBank.Desktop.ViewModel
                 SelectedAccountId = list.SelectedAccount.Id;
                 SelectedCustomerId = list.Id;
                 OnPropertyChanged(nameof(SelectedAccountBalance));
-                //SelectedListName = list.Name;
-                //Items = new ObservableCollection<ItemViewModel>((await _service.LoadItemsAsync(list.Id))
-                //    .Select(item => (ItemViewModel)item));
+                SelectedAccountIsLocked = list.SelectedAccount.IsLocked.ToString();
 
             }
             catch (Exception ex) when (ex is NetworkException || ex is HttpRequestException)
@@ -158,6 +212,24 @@ namespace MyBank.Desktop.ViewModel
 
         public int SelectedAccountId { get; set; }
         public int SelectedCustomerId { get; set; }
+
+        private String _selectedAccountIsLocked;
+
+        public String SelectedAccountIsLocked
+        {
+            get { return _selectedAccountIsLocked; }
+            set {
+                if (value == "True")
+                {
+                    _selectedAccountIsLocked = "Zárolt";
+                }
+                else 
+                { 
+                    _selectedAccountIsLocked = "Nem zárolt";
+                }
+                OnPropertyChanged(); 
+            }
+        }
 
     }
 }

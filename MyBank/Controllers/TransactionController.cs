@@ -121,7 +121,7 @@ namespace MyBank.Controllers
             {
                 destinationAccount.Balance += transaction.Amount;
                 sourceAccount.Balance -= transaction.Amount;
-                _customerService.CreateTransaction(TransactionType.Transfer, sourceAccount.Id, destinationAccount.Id, transaction.Amount, transaction.BenificaryName, transaction.Message);
+                _customerService.CreateTransactionById(TransactionType.Transfer, sourceAccount.Id, destinationAccount.Id, transaction.Amount, transaction.BenificaryName, transaction.Message);
             }
             else {
                 ModelState.AddModelError("", "A számla nem található");

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MyBank.Persistence.Dao;
+using MyBank.Persistence.Model;
 using MyBank.Persistence.Services;
 using MyBank.WebApi;
 using MyBank.WebApi.Model;
@@ -10,7 +11,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<CustomerContext>(options =>
+builder.Services.AddDbContext<EmployeeContext>(options =>
     //options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -33,14 +34,14 @@ builder.Services.AddIdentity<Employee, IdentityRole<int>>(options =>
 
     options.User.RequireUniqueEmail = false;
 })
-    .AddEntityFrameworkStores<CustomerContext>()
+    .AddEntityFrameworkStores<EmployeeContext>()
     .AddDefaultTokenProviders();
 
 // Add employee service
-builder.Services.AddIdentityCore<Customer>()
-    .AddEntityFrameworkStores<CustomerContext>();
+//builder.Services.AddIdentityCore<Customer>()
+//    .AddEntityFrameworkStores<CustomerContext>();
 
-builder.Services.AddTransient<ICustomerService, CustomerServiceImp>();
+builder.Services.AddTransient<ICustomerService, EmployeeServiceImp>();
 
 // Add services to the container.
 
@@ -82,10 +83,17 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseAuthentication();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var serviceScope = app.Services.CreateScope())
+{
+    // Adatbázis inicializálása
+    DbInitializerEmployee.InitializeAsync(
+       serviceScope.ServiceProvider).Wait();
+}
 
 app.Run();

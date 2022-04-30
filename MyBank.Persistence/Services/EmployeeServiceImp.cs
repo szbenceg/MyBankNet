@@ -5,12 +5,12 @@ using MyBank.Persistence.Dto;
 
 namespace MyBank.Persistence.Services
 {
-    public class CustomerServiceImp : ICustomerService
+    public class EmployeeServiceImp : ICustomerService
     {
-        private readonly UserManager<Customer> _customerManager;
-        private readonly CustomerContext _customerContext;
+        private readonly UserManager<Employee> _customerManager;
+        private readonly EmployeeContext _customerContext;
 
-        public CustomerServiceImp(UserManager<Customer> customerManager, CustomerContext customerContext)
+        public EmployeeServiceImp(UserManager<Employee> customerManager, EmployeeContext customerContext)
         {
             _customerManager = customerManager;
             _customerContext = customerContext;
@@ -151,16 +151,13 @@ namespace MyBank.Persistence.Services
 
         public bool GetIsSecureByUsername(string customerName) {
 
-            bool isSecure = _customerManager.FindByNameAsync(customerName).Result.IsSecure;
-
-            return isSecure;
+            return true;
 
         }
 
         public IEnumerable<Customer> FindAllWithAccounts() {
             return _customerContext.Customers.Include("Accounts");
         }
-
 
         public void AddMoneyById(int accountId, int amount) {
 
@@ -211,11 +208,12 @@ namespace MyBank.Persistence.Services
                 if(account.Balance - amount > 0) 
                 {
                     account.Balance -= amount;
+
+                    _customerContext.Transactions.Add(transaction);
+
+                    _customerContext.SaveChanges();
                 }
-
-                _customerContext.Transactions.Add(transaction);
-
-                _customerContext.SaveChanges();
+             
             }
         }
 

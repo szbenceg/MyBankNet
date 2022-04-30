@@ -72,7 +72,12 @@
                     <Label>Egyenleg:</Label>
                     <TextBox Width="150"  Height="21" Margin="5" Text="{Binding SelectedAccountBalance, UpdateSourceTrigger=PropertyChanged}" IsReadOnly = "True" />
                 </DockPanel>
-                
+
+                <DockPanel>
+                    <Label>Zárolt:</Label>
+                    <TextBox Width="150"  Height="21" Margin="5" Text="{Binding SelectedAccountIsLocked, UpdateSourceTrigger=PropertyChanged}" IsReadOnly = "True" />
+                </DockPanel>
+
             </StackPanel>
             <GroupBox Grid.Row="2">
                 <GroupBox.Header>
@@ -106,7 +111,8 @@
                 <Button Width="73"  Height="25" Margin="7" Content="Betét" Command="{Binding AddMoneyCommand}" />
                 <Button Width="73"  Height="25" Margin="7" Content="Kivét" Command="{Binding TakeOutMoneyCommand}" />
                 <Button Width="73"  Height="25" Margin="7" Content="Utalás" Command="{Binding CreateTransactionCommand}" />
-                <Button Width="100"  Height="25" Margin="7" Content="Számla zárolása" Command="{Binding DeleteItemCommand}" />
+                <Button Width="100"  Height="25" Margin="7" Content="Számla zárolása" Command="{Binding LockAccountCommand}" />
+                <Button Width="100"  Height="25" Margin="7" Content="Számla feloldása" Command="{Binding ReleaseAccountCommand}" />
             </StackPanel>
         </Grid>
     </DockPanel>
